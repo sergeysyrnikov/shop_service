@@ -1,4 +1,20 @@
-# shop_service
+# Тестовый сервис 
+### Представляет coбой тестовый асинхронный FastAPI сервер, представляющий магазин электроники
+
+## Запуск проекта
+
+В терминале из корня проекта выполнить команду:
+
+- **Для разработки (dev):**
+
+```bash
+  ENV=dev uvicorn main:shop_app --reload
+```
+- **Для разработки (prod):**
+```bash
+  ENV=prod uvicorn main:shop_app --reload
+```
+    
 
 ## Database schema
 
