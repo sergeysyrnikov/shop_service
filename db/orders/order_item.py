@@ -23,8 +23,8 @@ class OrderItemModel(BaseModel):
     )
     created_at = Column(DateTime, default=func.now(), nullable=False)
 
-    order = relationship("OrderModel", back_populates="order_items", lazy="joined")
-    product = relationship("ProductModel", back_populates="order_items", lazy="joined")
+    order = relationship("OrderModel", back_populates="order_items")
+    product = relationship("ProductModel", back_populates="order_items")
 
     def __repr__(self):
         return f"<OrderItem id: {self.id}, order_id: {self.order_id}, product_id: {self.product_id}>"

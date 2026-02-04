@@ -17,7 +17,7 @@ class OrderModel(BaseModel):
     updated_at = Column(DateTime, default=func.now(), nullable=False)
     created_at = Column(DateTime, default=func.now(), nullable=False)
 
-    client = relationship("ClientModel", back_populates="orders", lazy="joined")
+    client = relationship("ClientModel", back_populates="orders")
     order_items = relationship(
         "OrderItemModel", back_populates="order", lazy="selectin"
     )

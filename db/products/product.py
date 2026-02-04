@@ -24,7 +24,7 @@ class ProductModel(BaseModel):
     updated_at = Column(DateTime, default=func.now(), nullable=False)
     created_at = Column(DateTime, default=func.now(), nullable=False)
 
-    category = relationship("CategoryModel", back_populates="products", lazy="joined")
+    category = relationship("CategoryModel", back_populates="products")
     order_items = relationship(
         "OrderItemModel", back_populates="product", lazy="selectin"
     )
