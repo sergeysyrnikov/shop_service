@@ -12,7 +12,7 @@ class CategoryModel(BaseModel):
     parent_id = Column(
         BigInteger,
         ForeignKey("categories.id", ondelete="CASCADE"),
-        nullable=False,
+        nullable=True,
         index=True,
     )
     depth = Column(Integer, nullable=False, default=1)

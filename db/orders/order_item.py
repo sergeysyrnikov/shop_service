@@ -1,4 +1,4 @@
-from sqlalchemy import BigInteger, Column, DateTime, ForeignKey
+from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.functions import func
 
@@ -21,6 +21,7 @@ class OrderItemModel(BaseModel):
         nullable=False,
         index=True,
     )
+    count = Column(Integer, default=1, nullable=False)
     created_at = Column(DateTime, default=func.now(), nullable=False)
 
     order = relationship("OrderModel", back_populates="order_items")
