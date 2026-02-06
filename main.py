@@ -7,7 +7,9 @@ from sqlalchemy import text
 from categories.routers import category_router
 from clients.routers import client_router
 from core.db.conf_db import engine, async_session
-from scripts.fixtures_seed_data import seed_test_data
+from db.scripts.create_report_view import create_report_view
+from db.scripts.fixtures_seed_data import seed_test_data
+from products.routers import product_router
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +30,7 @@ async def lifespan(app):
         raise
     async with async_session() as session:
         await seed_test_data(session)
+        await create_report_view(session)
 
     yield
 
@@ -37,3 +40,4 @@ async def lifespan(app):
 shop_app = FastAPI(title="Shop App", description="Shop App", lifespan=lifespan)
 shop_app.include_router(client_router)
 shop_app.include_router(category_router)
+shop_app.include_router(product_router)

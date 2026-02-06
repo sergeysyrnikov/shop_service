@@ -30,7 +30,8 @@ class ClientRepo:
                 .order_by(ClientModel.name)
             )
         else:
-            res = await self.session.execute(text("""
+            res = await self.session.execute(
+                text("""
                     SELECT
                         c.name AS client_name,
                         SUM(oi.count * p.price) AS total_sum
@@ -43,5 +44,6 @@ class ClientRepo:
                                   ON p.id = oi.product_id
                     GROUP BY c.name
                     ORDER BY c.name
-                    """))
+                    """)
+            )
         return res.mappings().all()

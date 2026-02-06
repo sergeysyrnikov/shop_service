@@ -10,4 +10,4 @@ category_router = APIRouter(prefix="/categories", tags=["categories"])
 @category_router.get("/count-child")
 async def get_count_child(db: AsyncSession = Depends(get_db), with_orm: bool = False):
     repo = CategoryRepo(db)
-    await repo.get_count_child(with_orm=with_orm)
+    return await repo.get_count_child(with_orm=with_orm)
