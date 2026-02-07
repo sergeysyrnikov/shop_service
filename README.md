@@ -1,4 +1,5 @@
-# Тестовый сервис 
+# Тестовый сервис
+
 ### Представляет coбой тестовый асинхронный FastAPI сервер(магазин товаров)
 
 ## Запуск проекта
@@ -102,4 +103,36 @@ CREATE OR REPLACE VIEW report_view AS
         FROM sales_last_month
         WHERE rank <= 5
         ORDER BY rank
+```
+
+## 📚 API Documentation
+
+После запуска проекта документация доступна:
+
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+- OpenAPI schema: http://localhost:8000/openapi.json
+
+## 🐳 Команды для сборки проекта в Docker
+
+### 📦 Сборка контейнеров
+
+- **Для dev:**
+
+```bash
+  sudo ENV=dev docker compose up --build -d
+```
+
+- **Для prod:**
+
+```bash
+  sudo ENV=prod docker compose up --build -d
+```
+
+## 🧪 Запуск тестов (FastAPI)
+
+### ▶️ Запуск тестов локально
+
+```bash
+pytest - v
 ```
