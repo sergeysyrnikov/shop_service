@@ -61,7 +61,8 @@ class CategoryRepo(Repository):
             res = await self.session.execute(stmt)
 
         else:
-            res = await self.session.execute(text("""
+            res = await self.session.execute(
+                text("""
                     WITH RECURSIVE parent AS (
                         SELECT
                             c.id,
@@ -93,6 +94,7 @@ class CategoryRepo(Repository):
                                        ON ch.parent_id = p.id
                     GROUP BY p.id, p.name, p.root_name
                     ORDER BY p.id
-                    """))
+                    """)
+            )
 
         return res.mappings().all()

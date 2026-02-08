@@ -1,6 +1,4 @@
-import os
-
-from sqlalchemy import BigInteger, Column, DateTime, String, func, Integer
+from sqlalchemy import Column, DateTime, String, func
 from sqlalchemy.orm import relationship
 
 from app.models import BaseModel

@@ -1,5 +1,3 @@
-import os
-
 from sqlalchemy import (
     BigInteger,
     Column,

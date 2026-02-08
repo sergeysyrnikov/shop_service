@@ -22,7 +22,7 @@
 
 ## SQL Запросы, пункт 2(также для них созданы отдельные эндпойнты).
 
-### 2.1
+### 2.1 — Сумма заказов по клиентам
 ```sql
     SELECT
         c.name AS client_name,
@@ -38,7 +38,7 @@
     ORDER BY c.name
 ```
 
-### 2.2
+### 2.2 — Иерархия категорий
 ```sql
 WITH RECURSIVE parent AS (
         SELECT
@@ -73,7 +73,7 @@ WITH RECURSIVE parent AS (
     ORDER BY p.id
 ```
 
-### 2.3.1
+### 2.3.1 — Топ продаж за месяц (View)
 ```sql
 CREATE OR REPLACE VIEW report_view AS
         WITH RECURSIVE category_tree AS (
@@ -115,7 +115,7 @@ CREATE OR REPLACE VIEW report_view AS
 
 ## 🐳 Команды для сборки проекта в Docker
 
-### 📦 Сборка контейнеров
+### 📦 Сборка и запуск контейнеров (dev/prod) выполняется через один блок команд.
 
 - **Для dev:**
 
@@ -134,5 +134,6 @@ CREATE OR REPLACE VIEW report_view AS
 ### ▶️ Запуск тестов локально
 
 ```bash
-pytest - v
+pytest - v -s
+pytest --cov:app
 ```

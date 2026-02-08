@@ -12,13 +12,14 @@ from app.utils.db.fixtures_seed_data import seed_test_data
 os.environ["TESTING"] = "1"
 from app.models import BaseModel
 
-TEST_DB_URL = "sqlite+aiosqlite:///:memory:"
+TEST_DB_URL = "sqlite+aiosqlite:///./test.db"
+
+engine = create_async_engine(TEST_DB_URL, echo=False)
+async_session = async_sessionmaker(bind=engine, expire_on_commit=False)
 
 
 @pytest_asyncio.fixture
 async def session() -> AsyncSession:
-    engine = create_async_engine(TEST_DB_URL, echo=False)
-    async_session = async_sessionmaker(bind=engine, expire_on_commit=False)
 
     async with engine.begin() as conn:
         await conn.run_sync(BaseModel.metadata.create_all)
@@ -26,6 +27,8 @@ async def session() -> AsyncSession:
     async with async_session() as session:
         yield session
 
+    async with engine.begin() as conn:
+        await conn.run_sync(BaseModel.metadata.drop_all)
     await engine.dispose()
 
 
@@ -46,4 +49,4 @@ async def client(session):
 
 @pytest_asyncio.fixture
 async def add_seed_test_data(session):
-    await seed_test_data(session)
+    return await seed_test_data(session)

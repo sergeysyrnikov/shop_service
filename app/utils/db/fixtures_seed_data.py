@@ -1,4 +1,5 @@
 import random
+
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from decimal import Decimal
@@ -14,10 +15,12 @@ from app.models import (
 
 async def seed_test_data(session: AsyncSession):
     # --- Проверка: есть ли уже данные ---
-    existing = await session.scalar(select(CategoryModel.id))
+    existing = await session.scalar(select(OrderItemModel.id))
     if existing:
         print("Test data already exists!")
-        return
+        res = await session.execute(select(OrderItemModel))
+        items: list[OrderItemModel] = res.scalars().all()
+        return items
 
     categories = []
 
@@ -194,6 +197,7 @@ async def seed_test_data(session: AsyncSession):
     await session.flush()
 
     # --- Элементы заказов ---
+    order_items = []
     for order in orders:
         products_in_order = random.sample(products, k=random.randint(2, 4))
         for prod in products_in_order:
@@ -201,6 +205,10 @@ async def seed_test_data(session: AsyncSession):
                 order_id=order.id, product_id=prod.id, count=random.randint(1, 3)
             )
             session.add(order_item)
+            order_items.append(order_item)
 
     await session.commit()
+
     print("Test data seeded successfully")
+
+    return order_items

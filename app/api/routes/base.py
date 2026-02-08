@@ -22,5 +22,5 @@ async def ping(db: AsyncSession = Depends(get_db)):
     try:
         await db.execute(text("SELECT 1"))
         return {"status": "ok", "db_connected": True}
-    except Exception as e:
+    except Exception:
         return {"status": "error", "db_connected": False}
