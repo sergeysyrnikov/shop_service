@@ -1,8 +1,8 @@
-"""Create tables
+"""add tbls
 
-Revision ID: a23e9196f12e
+Revision ID: 054ab516f9b2
 Revises:
-Create Date: 2026-02-04 17:18:19.689808
+Create Date: 2026-02-08 16:53:31.673019
 
 """
 
@@ -11,8 +11,9 @@ from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
 
+
 # revision identifiers, used by Alembic.
-revision: str = "a23e9196f12e"
+revision: str = "054ab516f9b2"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -24,7 +25,7 @@ def upgrade() -> None:
         "categories",
         sa.Column("id", sa.BigInteger(), autoincrement=True, nullable=False),
         sa.Column("name", sa.String(length=50), nullable=False),
-        sa.Column("parent_id", sa.BigInteger(), nullable=False),
+        sa.Column("parent_id", sa.BigInteger(), nullable=True),
         sa.Column("depth", sa.Integer(), nullable=False),
         sa.ForeignKeyConstraint(["parent_id"], ["categories.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
@@ -74,10 +75,12 @@ def upgrade() -> None:
         sa.Column("id", sa.BigInteger(), autoincrement=True, nullable=False),
         sa.Column("order_id", sa.BigInteger(), nullable=False),
         sa.Column("product_id", sa.BigInteger(), nullable=False),
+        sa.Column("count", sa.Integer(), nullable=False),
         sa.Column("created_at", sa.DateTime(), nullable=False),
         sa.ForeignKeyConstraint(["order_id"], ["orders.id"], ondelete="CASCADE"),
         sa.ForeignKeyConstraint(["product_id"], ["products.id"], ondelete="CASCADE"),
         sa.PrimaryKeyConstraint("id"),
+        sa.UniqueConstraint("order_id", "product_id", name="uq_order_product"),
     )
     op.create_index(
         op.f("ix_order_items_order_id"), "order_items", ["order_id"], unique=False
